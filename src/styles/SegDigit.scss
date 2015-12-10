@@ -1,0 +1,18 @@
+.seven-seg-digit-common { 
+    overflow: hidden;
+    stroke-width: 0; 
+    height: 100%; 
+    width: 100%; 
+}
+
+.seven-seg-digit-default {
+    background-color: Black;
+    fill: #320000;
+}
+.seven-seg-on {
+    fill: red;
+}
+
+.seven-seg-digit-wrapper {
+    display: inline-block;
+}
