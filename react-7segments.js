@@ -64,10 +64,15 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _SegGroup2 = _interopRequireDefault(_SegGroup);
 
+	var _SegMap = __webpack_require__(10);
+
+	var _SegMap2 = _interopRequireDefault(_SegMap);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	exports.SegDigit = _SegDigit2.default;
-	exports.SegGroup = _SegGroup2.default;
+	exports.Digit = _SegDigit2.default;
+	exports.Group = _SegGroup2.default;
+	exports.Map = _SegMap2.default;
 
 /***/ },
 /* 1 */
@@ -92,9 +97,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getDefaultProps: function getDefaultProps() {
 	        return {
-	            digitClass: 'seven-seg-digit-default',
+	            digitClass: 'seven-seg-digit',
 	            onClass: 'seven-seg-on',
-	            width: 100,
+	            width: 75,
 	            height: 150
 	        };
 	    },
@@ -110,15 +115,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	            height: this.props.height + 'px'
 	        };
 
-	        var digitClass = this.props.digitClass + ' seven-seg-digit-common';
-
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'seven-seg-digit-wrapper', style: digitWrapperStyle },
 	            _react2.default.createElement(
 	                'svg',
-	                { className: digitClass, viewBox: '0 0 57 80', version: '1.1', xmlns: 'http://www.w3.org/2000/svg',
-	                    focusable: 'false' },
+	                { className: this.props.digitClass, viewBox: '0 0 57 80', version: '1.1',
+	                    xmlns: 'http://www.w3.org/2000/svg', focusable: 'false' },
 	                _react2.default.createElement(
 	                    'defs',
 	                    null,
@@ -191,7 +194,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 	// module
-	exports.push([module.id, ".seven-seg-digit-common {\n  overflow: hidden;\n  stroke-width: 0;\n  height: 100%;\n  width: 100%;\n}\n\n.seven-seg-digit-default {\n  background-color: Black;\n  fill: #320000;\n}\n\n.seven-seg-on {\n  fill: red;\n}\n\n.seven-seg-digit-wrapper {\n  display: inline-block;\n}\n", ""]);
+	exports.push([module.id, ".seven-seg-digit {\n  overflow: hidden;\n  stroke-width: 0;\n  height: 100%;\n  width: 100%;\n  background-color: Black;\n  fill: #320000;\n}\n\n.seven-seg-on {\n  fill: red;\n}\n\n.seven-seg-digit-wrapper {\n  display: inline-block;\n}\n", ""]);
 
 	// exports
 
@@ -537,22 +540,60 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getDefaultProps: function getDefaultProps() {
 	        return {
-	            value: '12345'
+	            size: 9,
+	            align: true,
+	            value: '-.1.2.345'
 	        };
 	    },
-	    render: function render() {
-	        var value = this.props.value;
 
-	        var digits = [];
+	    isDot: function isDot(item) {
+	        return item === '.' || item === _SegMap2.default['.'];
+	    },
 
-	        for (var i = 0; i < value.length; i++) {
-	            digits[i] = _react2.default.createElement(_SegDigit2.default, { value: _SegMap2.default[value[i]], key: i });
+	    getSegArray: function getSegArray(value) {
+	        var newArr = [],
+	            cnt = 0;
+	        var size = this.props.size === void 0 ? value.length : this.props.size,
+	            i = 0;
+
+	        for (var len = value.length; i < len && cnt < size; cnt++, i++) {
+	            var item = value[i] || 0;
+
+	            if (this.isDot(item)) {
+	                // when item is dot
+	                var prev = value[i - 1];
+
+	                if (prev === void 0 || this.isDot(prev)) newArr[cnt] = _SegMap2.default['.'];else newArr[--cnt] |= _SegMap2.default['.'];
+	            } else if (typeof item === 'string') {
+	                newArr[cnt] = _SegMap2.default[item];
+	            } else if (typeof item === 'number') {
+	                newArr[cnt] = item;
+	            }
 	        }
 
+	        if (this.isDot(value[i])) newArr[cnt - 1] |= _SegMap2.default['.'];
+
+	        size = this.props.size === void 0 ? cnt : this.props.size;
+
+	        if (this.props.align === void 0 || this.props.align === 'right') return new Array(size - cnt).concat(newArr);else return newArr.concat(new Array(size - cnt));
+	    },
+
+	    getSegDigits: function getSegDigits(arr) {
+	        var digits = [];
+
+	        for (var i = 0; i < arr.length; i++) {
+	            digits[i] = _react2.default.createElement(_SegDigit2.default, { value: arr[i], key: i });
+	        }
+
+	        return digits;
+	    },
+
+	    render: function render() {
+	        var results = this.getSegDigits(this.getSegArray(this.props.value));
 	        return _react2.default.createElement(
 	            'div',
-	            null,
-	            digits
+	            { className: 'seven-seg-group' },
+	            results
 	        );
 	    }
 	});

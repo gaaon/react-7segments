@@ -5,9 +5,9 @@ import '../styles/SegDigit.scss';
 export default React.createClass({
     getDefaultProps: function(){
         return {
-            digitClass: 'seven-seg-digit-default',
+            digitClass: 'seven-seg-digit',
             onClass: 'seven-seg-on',
-            width: 100,
+            width: 75,
             height: 150
         };
     },
@@ -21,12 +21,10 @@ export default React.createClass({
             height: this.props.height+'px'
         };
         
-        var digitClass = this.props.digitClass + ' seven-seg-digit-common';
-        
         return (
             <div className="seven-seg-digit-wrapper" style={digitWrapperStyle}>
-                <svg className={digitClass} viewBox="0 0 57 80" version="1.1" xmlns="http://www.w3.org/2000/svg" 
-                    focusable="false">
+                <svg className={this.props.digitClass} viewBox="0 0 57 80" version="1.1" 
+                    xmlns="http://www.w3.org/2000/svg" focusable="false">
                     
                     <defs>
                         <polyline id="h-part" points="11 0, 37 0, 42 5, 37 10, 11 10, 6 5"></polyline>
@@ -56,10 +54,6 @@ export default React.createClass({
                         
                         <use xlinkHref="#v-part" x="-48" y="-80" transform="scale(-1,-1)" 
                             className={isOn(4)}></use>
-                        
-                        
-                        
-                            
                         
                         <circle cx="52" cy="75" r="5"  
                             className={isOn(128)}></circle>

@@ -15,8 +15,7 @@ module.exports = {
 
     externals: {
         'react': 'var React',
-        'react/addons': 'var React',
-        'react-dom': 'var ReactDOM'
+        'react/addons': 'var React'
     },
     
     resolve: {
@@ -27,12 +26,12 @@ module.exports = {
         loaders: [
             {
                 test: /\.scss$/,
-                // Query parameters are passed to node-sass
+                exclude: /(node_modules|bower_components)/,
                 loader: 'style!css!sass?outputStyle=expanded&'
             },
             {
                 test: /(\.js)|(\.jsx)$/,
-                exclude: /node_modules/,
+                exclude: /(node_modules|bower_components)/,
                 loader: 'babel'
             }
         ]
@@ -40,8 +39,9 @@ module.exports = {
     
     sassLoader: {
         includePaths: [
-            path.resolve(__dirname, './bower_components'),
-            path.resolve(__dirname, './node_modules')
+            path.resolve(__dirname, './src/styles')
         ]
-    }
+    },
+    
+    devtool: 'inline-source-map'
 };

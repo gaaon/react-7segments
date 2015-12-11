@@ -1,6 +1,7 @@
 import SegDigit from './components/SegDigit';
 import SegGroup from './components/SegGroup';
+import SegMap   from './SegMap';
 
-
-exports.SegDigit = SegDigit;
-exports.SegGroup = SegGroup;
+exports.Digit    = SegDigit;
+exports.Group    = SegGroup;
+exports.Map      = SegMap;
