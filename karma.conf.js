@@ -15,6 +15,10 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'bower_components/react/react.js',
+      'bower_components/react/react-dom.js',
+      'react-7segments.js',
+      
       'test/testEntry.js'
     ],
 
