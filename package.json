@@ -4,7 +4,7 @@
   "description": "React component for displaying seven segments",
   "main": "react-7segments.js",
   "scripts": {
-    "test": "karma"
+    "test": "karma start --single-run"
   },
   "repository": {
     "type": "git",
