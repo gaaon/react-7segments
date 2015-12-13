@@ -19,6 +19,7 @@ module.exports = {
     },
     
     resolve: {
+        root: __dirname,
         extensions: ['', '.js', '.jsx']
     },
     
@@ -41,7 +42,5 @@ module.exports = {
         includePaths: [
             path.resolve(__dirname, './src/styles')
         ]
-    },
-    
-    devtool: 'inline-source-map'
+    }
 };

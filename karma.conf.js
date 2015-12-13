@@ -15,10 +15,6 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'bower_components/react/react.js',
-      'bower_components/react/react-dom.js',
-      'react-7segments.js',
-      
       'test/testEntry.js'
     ],
 
@@ -34,8 +30,7 @@ module.exports = function(config) {
       }
     },
     
-    
-    webpack: require('./webpack.config'),
+    webpack: Object.assign({devtool: 'inline-source-map'}, require('./webpack.config'), {externals: {}}),
     
     
     webpackServer: {

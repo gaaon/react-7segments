@@ -17,6 +17,10 @@ export default React.createClass({
         return item === '.' || item === SegMap['.'];
     },
     
+    componentWillReceiveProps: function(nextProps){
+        //console.log(nextProps);
+    },
+    
     getSegArray: function(value) {
         var newArr = [], cnt = 0;
         var size = this.props.size === void 0 ? value.length : this.props.size, i = 0;
