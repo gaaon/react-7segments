@@ -31,10 +31,14 @@ describe('SegGroup Component', function(){
         
         var node = renderer.refs.input;
         
+        var values = [];
+        
+        for(var i = 0 ; i < 256 ; i++) values.push(Math.floor(Math.random()*256));
+        
         Perf.start();
         for(var i = 1 ; i < 256 ; i++) {
             
-            node.value = i;
+            node.value = values[i];
             TestUtils.Simulate.change(node);
             TestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
         }

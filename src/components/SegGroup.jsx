@@ -12,13 +12,19 @@ export default React.createClass({
             value: '-.1.2.345'
         };
     },
-    
+    getInitialState: function(){
+        return {
+            digits: []
+        };
+    },
     isDot : function(item) {
         return item === '.' || item === SegMap['.'];
     },
     
     componentWillReceiveProps: function(nextProps){
-        //console.log(nextProps);
+        this.setState({
+            digits: this.getSegDigits(this.getSegArray(nextProps))
+        });
     },
     
     getSegArray: function(value) {
@@ -63,10 +69,9 @@ export default React.createClass({
     },
     
     render: function(){
-        var results = this.getSegDigits(this.getSegArray(this.props.value));
         return (
             <div className="seven-seg-group">
-                {results} 
+                {this.state.digits} 
             </div>
         );
     }
