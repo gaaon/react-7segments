@@ -12,3 +12,6 @@ before_script:
   - npm install -g bower
   - export PHANTOMJS_BIN=/usr/local/phantomjs/bin/phantomjs
   - bower install
+  
+script:
+  - npm test -- --single-run
