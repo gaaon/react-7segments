@@ -60,11 +60,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _SegDigit2 = _interopRequireDefault(_SegDigit);
 
-	var _SegGroup = __webpack_require__(7);
+	var _SegGroup = __webpack_require__(8);
 
 	var _SegGroup2 = _interopRequireDefault(_SegGroup);
 
-	var _SegMap = __webpack_require__(10);
+	var _SegMap = __webpack_require__(11);
 
 	var _SegMap2 = _interopRequireDefault(_SegMap);
 
@@ -88,7 +88,11 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(3);
+	var _SegPoints = __webpack_require__(3);
+
+	var _SegPoints2 = _interopRequireDefault(_SegPoints);
+
+	__webpack_require__(4);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -103,17 +107,26 @@ return /******/ (function(modules) { // webpackBootstrap
 	            height: 150
 	        };
 	    },
-	    render: function render() {
-	        var _this = this;
+	    shouldComponentUpdate: function shouldComponentUpdate(nextProps) {
+	        return this.props.value !== nextProps.value;
+	    },
 
-	        var isOn = function isOn(pos) {
-	            return _this.props.value & pos ? _this.props.onClass : undefined;
-	        };
+	    isOn: function isOn(pos) {
+	        return this.props.value & pos ? this.props.onClass : undefined;
+	    },
+
+	    render: function render() {
 
 	        var digitWrapperStyle = {
 	            width: this.props.width + 'px',
 	            height: this.props.height + 'px'
 	        };
+
+	        var polylines = [];
+
+	        for (var i = 0; i < 7; i++) {
+	            polylines[i] = _react2.default.createElement('polyline', { points: _SegPoints2.default[i], className: this.isOn(1 << i), key: i });
+	        }
 
 	        return _react2.default.createElement(
 	            'div',
@@ -123,30 +136,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	                { className: this.props.digitClass, viewBox: '0 0 57 80', version: '1.1',
 	                    xmlns: 'http://www.w3.org/2000/svg', focusable: 'false' },
 	                _react2.default.createElement(
-	                    'defs',
-	                    null,
-	                    _react2.default.createElement('polyline', { id: 'h-part', points: '11 0, 37 0, 42 5, 37 10, 11 10, 6 5' }),
-	                    _react2.default.createElement('polyline', { id: 'v-part', points: '0 11, 5 6, 10 11, 10 34, 5 39, 0 34' })
-	                ),
-	                _react2.default.createElement(
 	                    'g',
 	                    null,
-	                    _react2.default.createElement('use', { xlinkHref: '#h-part', x: '0', y: '0',
-	                        className: isOn(1) }),
-	                    _react2.default.createElement('use', { xlinkHref: '#h-part', x: '0', y: '70',
-	                        className: isOn(8) }),
-	                    _react2.default.createElement('use', { xlinkHref: '#h-part', x: '0', y: '35',
-	                        className: isOn(64) }),
-	                    _react2.default.createElement('use', { xlinkHref: '#v-part', x: '0', y: '0',
-	                        className: isOn(32) }),
-	                    _react2.default.createElement('use', { xlinkHref: '#v-part', x: '0', y: '-80', transform: 'scale(1,-1)',
-	                        className: isOn(16) }),
-	                    _react2.default.createElement('use', { xlinkHref: '#v-part', x: '-48', y: '0', transform: 'scale(-1,1)',
-	                        className: isOn(2) }),
-	                    _react2.default.createElement('use', { xlinkHref: '#v-part', x: '-48', y: '-80', transform: 'scale(-1,-1)',
-	                        className: isOn(4) }),
-	                    _react2.default.createElement('circle', { cx: '52', cy: '75', r: '5',
-	                        className: isOn(128) })
+	                    polylines,
+	                    _react2.default.createElement('circle', { cx: '52', cy: '75', r: '5', className: this.isOn(128) })
 	                )
 	            )
 	        );
@@ -161,15 +154,30 @@ return /******/ (function(modules) { // webpackBootstrap
 
 /***/ },
 /* 3 */
+/***/ function(module, exports) {
+
+	"use strict";
+
+	module.exports = ["11 0, 37 0, 42 5, 37 10, 11 10, 6 5", //1
+	"38 11, 43 6, 48 11, 48 34, 43 39, 38 34", //2
+	"38 46, 43 41, 48 46, 48 69, 43 74, 38 69", //4
+	"11 70, 37 70, 42 75, 37 80, 11 80, 6 75", //8
+	"0 46, 5 41, 10 46, 10 69, 5 74, 0 69", //16
+	"0 11, 5 6, 10 11, 10 34, 5 39, 0 34", //32
+	"11 35, 37 35, 42 40, 37 45, 11 45, 6 40" //64
+	];
+
+/***/ },
+/* 4 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(4);
+	var content = __webpack_require__(5);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -186,10 +194,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 4 */
+/* 5 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
@@ -200,7 +208,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 5 */
+/* 6 */
 /***/ function(module, exports) {
 
 	/*
@@ -256,7 +264,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 6 */
+/* 7 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -510,7 +518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 7 */
+/* 8 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -523,9 +531,9 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _react2 = _interopRequireDefault(_react);
 
-	__webpack_require__(8);
+	__webpack_require__(9);
 
-	var _SegMap = __webpack_require__(10);
+	var _SegMap = __webpack_require__(11);
 
 	var _SegMap2 = _interopRequireDefault(_SegMap);
 
@@ -545,9 +553,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	            value: '-.1.2.345'
 	        };
 	    },
-
+	    getInitialState: function getInitialState() {
+	        return {
+	            digits: []
+	        };
+	    },
 	    isDot: function isDot(item) {
 	        return item === '.' || item === _SegMap2.default['.'];
+	    },
+
+	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
+	        this.setState({
+	            digits: this.getSegDigits(this.getSegArray(nextProps))
+	        });
 	    },
 
 	    getSegArray: function getSegArray(value) {
@@ -589,26 +607,25 @@ return /******/ (function(modules) { // webpackBootstrap
 	    },
 
 	    render: function render() {
-	        var results = this.getSegDigits(this.getSegArray(this.props.value));
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'seven-seg-group' },
-	            results
+	            this.state.digits
 	        );
 	    }
 	});
 
 /***/ },
-/* 8 */
+/* 9 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(9);
+	var content = __webpack_require__(10);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(6)(content, {});
+	var update = __webpack_require__(7)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
@@ -625,10 +642,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 
 /***/ },
-/* 9 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(5)();
+	exports = module.exports = __webpack_require__(6)();
 	// imports
 
 
@@ -639,7 +656,7 @@ return /******/ (function(modules) { // webpackBootstrap
 
 
 /***/ },
-/* 10 */
+/* 11 */
 /***/ function(module, exports) {
 
 	'use strict';

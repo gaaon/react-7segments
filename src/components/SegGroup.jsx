@@ -1,6 +1,6 @@
 import React from 'react';
 import '../styles/SegGroup.scss';
-import SegMap from '../SegMap';
+import SegMap from '../collections/SegMap';
 import SegDigit from './SegDigit';
 
 
