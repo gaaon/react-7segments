@@ -28,7 +28,7 @@ describe('SegGroup Component', function(){
         }
     });
     
-    it.only('should detect change and re-render when values are not random.', function(){
+    it('should detect change and re-render when values are not random.', function(){
         var renderer = TestUtils.renderIntoDocument(<TestDir/>);
         
         var node = renderer.refs.input;
@@ -64,22 +64,33 @@ describe('SegGroup Component', function(){
         
         var node = renderer.refs.input;
         
-        var values = [], i;
-        
-        for(i = 0 ; i < 256 ; i++) {
-            values.push(Math.floor(Math.random()*256));
-        }
-        
-        Perf.start();
-        for(i = 1 ; i < 256 ; i++) {
+        var total = 0;
+        for(var j = 0 ; j < 10 ; j++) {
+            var values = [], i;
             
-            node.value = values[i];
-            TestUtils.Simulate.change(node);
-            TestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+            for(i = 0 ; i < 256 ; i++) {
+                values.push(Math.floor(Math.random()*256));
+            }
+            
+            Perf.start();
+            for(i = 1 ; i < 256 ; i++) {
+                
+                node.value = values[i];
+                TestUtils.Simulate.change(node);
+                TestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+            }
+            Perf.stop();
+            
+            var result = Perf.getLastMeasurements();
+            var time = parseFloat(PerfAnalysis.getTotalTime(result).toFixed(2));
+            //Perf.printInclusive(result);
+            
+            //console.log(`${j}: ${PerfAnalysis.getTotalTime(result).toFixed(2)}`);
+            
+            total += time;
         }
-        Perf.stop();
         
-        Perf.printInclusive(Perf.getLastMeasurements());
+        console.log(total/10);
     });
     
 });

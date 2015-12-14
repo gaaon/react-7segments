@@ -11,6 +11,11 @@ export default React.createClass({
             height: 150
         };
     },
+    
+    shouldComponentUpdate: function(nextProps) {
+        return this.props.value !== nextProps.value;
+    },
+    
     render: function() {
         var isOn = (pos)=>{
             return this.props.value & pos ? this.props.onClass : undefined;
