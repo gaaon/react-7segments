@@ -3,6 +3,7 @@ import ReactDOM     from 'react-dom';
 import TestUtils    from 'react-addons-test-utils';
 import SegDigit     from '../src/components/SegDigit';
 import Perf         from 'react-addons-perf';
+import PerfAnalysis from 'react/lib/ReactDefaultPerfAnalysis';
 
 
 require('console.table');
@@ -32,16 +33,28 @@ describe('SegGroup Component', function(){
         
         var node = renderer.refs.input;
         
-        Perf.start();
-        for(var i = 1 ; i < 256 ; i++) {
+        var total = 0;
+        for(var j = 0 ; j < 10 ; j++) {
             
-            node.value = i;
-            TestUtils.Simulate.change(node);
-            TestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+            Perf.start();
+            for(var i = 1 ; i < 256 ; i++) {
+                
+                node.value = i;
+                TestUtils.Simulate.change(node);
+                TestUtils.Simulate.keyDown(node, {key: "Enter", keyCode: 13, which: 13});
+            }
+            Perf.stop();
+            
+            var result = Perf.getLastMeasurements();
+            var time = parseFloat(PerfAnalysis.getTotalTime(result).toFixed(2));
+            //Perf.printInclusive(result);
+            
+            //console.log(`${j}: ${PerfAnalysis.getTotalTime(result).toFixed(2)}`);
+            
+            total += time;
         }
-        Perf.stop();
         
-        Perf.printInclusive(Perf.getLastMeasurements());
+        console.log(total/10);
     });
     
     
