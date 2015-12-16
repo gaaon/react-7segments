@@ -68,11 +68,21 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	var _SegMap2 = _interopRequireDefault(_SegMap);
 
+	var _SegUtil = __webpack_require__(12);
+
+	var _SegUtil2 = _interopRequireDefault(_SegUtil);
+
+	var _SegPoints = __webpack_require__(3);
+
+	var _SegPoints2 = _interopRequireDefault(_SegPoints);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	exports.Digit = _SegDigit2.default;
 	exports.Group = _SegGroup2.default;
 	exports.Map = _SegMap2.default;
+	exports.Util = _SegUtil2.default;
+	exports.Points = _SegPoints2.default;
 
 /***/ },
 /* 1 */
@@ -103,6 +113,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return {
 	            digitClass: 'seven-seg-digit',
 	            onClass: 'seven-seg-on',
+	            points: _SegPoints2.default,
 	            width: 75,
 	            height: 150
 	        };
@@ -125,7 +136,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var polylines = [];
 
 	        for (var i = 0; i < 7; i++) {
-	            polylines[i] = _react2.default.createElement('polyline', { points: _SegPoints2.default[i], className: this.isOn(1 << i), key: i });
+	            polylines[i] = _react2.default.createElement('polyline', { points: this.props.points[i], className: this.isOn(1 << i), key: i });
 	        }
 
 	        return _react2.default.createElement(
@@ -158,7 +169,10 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	"use strict";
 
-	module.exports = ["11 0, 37 0, 42 5, 37 10, 11 10, 6 5", //1
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.default = ["11 0, 37 0, 42 5, 37 10, 11 10, 6 5", //1
 	"38 11, 43 6, 48 11, 48 34, 43 39, 38 34", //2
 	"38 46, 43 41, 48 46, 48 69, 43 74, 38 69", //4
 	"11 70, 37 70, 42 75, 37 80, 11 80, 6 75", //8
@@ -523,6 +537,8 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
@@ -548,27 +564,17 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	    getDefaultProps: function getDefaultProps() {
 	        return {
-	            size: 9,
-	            align: true,
-	            value: '-.1.2.345'
-	        };
-	    },
-	    getInitialState: function getInitialState() {
-	        return {
-	            digits: []
+	            value: '',
+	            align: undefined,
+	            map: _SegMap2.default
 	        };
 	    },
 	    isDot: function isDot(item) {
-	        return item === '.' || item === _SegMap2.default['.'];
+	        return item === '.' || item === this.props.map['.'];
 	    },
-
-	    componentWillReceiveProps: function componentWillReceiveProps(nextProps) {
-	        this.setState({
-	            digits: this.getSegDigits(this.getSegArray(nextProps))
-	        });
-	    },
-
 	    getSegArray: function getSegArray(value) {
+	        var map = this.props.map;
+
 	        var newArr = [],
 	            cnt = 0;
 	        var size = this.props.size === void 0 ? value.length : this.props.size,
@@ -581,15 +587,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	                // when item is dot
 	                var prev = value[i - 1];
 
-	                if (prev === void 0 || this.isDot(prev)) newArr[cnt] = _SegMap2.default['.'];else newArr[--cnt] |= _SegMap2.default['.'];
+	                if (prev === void 0 || this.isDot(prev)) newArr[cnt] = map['.'];else newArr[--cnt] |= map['.'];
 	            } else if (typeof item === 'string') {
-	                newArr[cnt] = _SegMap2.default[item];
+	                newArr[cnt] = map[item];
 	            } else if (typeof item === 'number') {
 	                newArr[cnt] = item;
 	            }
 	        }
 
-	        if (this.isDot(value[i])) newArr[cnt - 1] |= _SegMap2.default['.'];
+	        if (this.isDot(value[i])) newArr[cnt - 1] |= map['.'];
 
 	        size = this.props.size === void 0 ? cnt : this.props.size;
 
@@ -600,17 +606,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var digits = [];
 
 	        for (var i = 0; i < arr.length; i++) {
-	            digits[i] = _react2.default.createElement(_SegDigit2.default, { value: arr[i], key: i });
+	            digits[i] = _react2.default.createElement(_SegDigit2.default, _extends({ key: i }, this.props.digitOptions, { value: arr[i] }));
 	        }
 
 	        return digits;
 	    },
 
 	    render: function render() {
+	        var digits = this.getSegDigits(this.getSegArray(this.props.value));
+
 	        return _react2.default.createElement(
 	            'div',
 	            { className: 'seven-seg-group' },
-	            this.state.digits
+	            digits
 	        );
 	    }
 	});
@@ -682,6 +690,39 @@ return /******/ (function(modules) { // webpackBootstrap
 	    'S': 109,
 	    'E': 121,
 	    'G': 61
+	};
+
+/***/ },
+/* 12 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	exports.arrToSegNum = function (arr) {
+	    var pos = 1,
+	        ret = 0;
+
+	    for (var i = 0, len = 8; i < len; pos <<= 1, i++) {
+	        if (!!arr[i] && arr[i] != '0') ret |= pos;
+	    }
+
+	    return ret;
+	};
+
+	exports.segNumToArr = function (val, oldVal) {
+	    var pos = 1;
+	    val = val || 0;
+
+	    var xor = oldVal == void 0 ? val : val ^ oldVal;
+
+	    var array = [];
+	    for (var i = 0; i < 8; pos <<= 1, i++) {
+	        if (pos & xor) {
+	            array[i] = !!(pos & val);
+	        }
+	    }
+
+	    return array;
 	};
 
 /***/ }
