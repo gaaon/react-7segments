@@ -8,7 +8,7 @@ import PerfAnalysis from 'react/lib/ReactDefaultPerfAnalysis';
 
 require('console.table');
 
-describe('SegGroup Component', function(){
+describe.skip('SegGroup Component', function(){
     var TestDir = React.createClass({
         getInitialState: function(){
             return {
