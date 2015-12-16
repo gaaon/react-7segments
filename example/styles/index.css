@@ -1,0 +1,79 @@
+body, html {
+    min-height: 100%;
+    font-family: "Roboto", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-color: #ddd;
+}
+
+.main-wrapper {
+    height:100%;
+}
+
+.hljs {
+    border: 1px solid #ddd;
+}
+
+.text-corn {
+    color: #6495ED;
+}
+
+.bg-white {
+    background-color: white;
+}
+
+.text-white {
+    color: white;
+}
+
+.bg-corn {
+    background-color: #6495ED;
+}
+
+.bg-trans {
+    background-color: transparent;
+}
+
+.bg-dark {
+    background-color: black;
+}
+
+.padding-1 {
+    padding: 1pc;
+}
+
+.bg-grey {
+    background-color: #ddd;
+}
+
+.text-black {
+    color: black;
+}
+
+.segment-digit-common {
+    overflow: hidden;
+    stroke-width: 0; 
+    height: 100%; 
+    width: 100%;
+}
+
+.custom-segment-digit {
+    fill: #D9E5FF;
+    background-color: white;
+    
+}
+
+.custom-segment-on {
+    fill: #4374D9;
+}
+
+.title-segment-digit {
+    fill: #6799FF;
+    background-color: #6495ED;
+}
+
+.title-segment-on {
+    fill: white;
+}
+
+#title > div {
+    display: inline-block;
+}

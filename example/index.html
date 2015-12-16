@@ -1,20 +1,107 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8" />
-        <title>Hello React</title>
-        <script src="https://fb.me/react-0.14.3.js"></script>
-        <script src="https://fb.me/react-dom-0.14.3.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
-    </head>
-    <body>
-        <div id="example"></div>
+        <!-- Required meta tags always come first -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
         
+        <!-- Bootstrap CSS -->
+        <link rel="stylesheet" href="//cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+        <link rel="stylesheet" href="styles/index.css">
+        <link href='//fonts.googleapis.com/css?family=Roboto:300,500,700' rel='stylesheet' type='text/css'>
+        <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/8.9.1/styles/github.min.css" rel="stylesheet">
+    </head>
+  
+    <body>
+        <div class="bg-corn padding-1 text-white container">
+            <h1 class="display-3">
+                    
+                <div>React</div>
+                
+                <span id="title"></span>ments
+                
+                <small class="text-muted" style="display:block;">
+                    example
+                </small>
+            </h1>
+            by <a href="https://github.com/wooooo" target="_blank">Taewoo Kim</a>
+        </div>
+        <div class="main-wrapper container bg-white">
+            <br>
+            <div class="text-danger">
+                - API document will be created as soon as possible. <br/>
+                - If you use a chrome browser, you can view each example source with 'development tool' <br> 
+                by <kbd>ctrl</kbd>(or<kbd>⌘</kbd> )+ <kbd>shift</kbd> + <kbd>j</kbd>
+            </div>
+            <div id="examples">
+                
+            </div>
+        </div>
+        <footer class="bg-inverse container" style="padding: 1pc;">
+            <a href="https://github.com/wooooo/react-7segments" class="text-white"> github </a>
+        </footer>
+        
+        <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+        <script src="//fb.me/react-with-addons-0.14.3.js"></script>
+        <script src="//fb.me/react-dom-0.14.3.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
         <script src="../react-7segments.js"></script>
+        
+        <script src="scripts/Setting.js"></script>
+        <script src="scripts/Card.jsx" type="text/babel"></script>
+        <script src="scripts/BasicEg.jsx" type="text/babel"></script>
+        <script src="scripts/TimeEg.jsx" type="text/babel"></script>
+        <script src="scripts/DotsEg.jsx" type="text/babel"></script>
+        <script src="scripts/OptionsEg.jsx" type="text/babel"></script>
+        <script src="scripts/StyleEg.jsx" type="text/babel"></script>
+        <script src="scripts/PatternEg.jsx" type="text/babel"></script>
+        <script src="scripts/ShapeEg.jsx" type="text/babel"></script>
+        
         <script type="text/babel">
+        
+            var titleConfig = {
+                digitOptions: {
+                    onClass: 'title-segment-on',
+                    digitClass: 'title-segment-digit',
+                    width: 50,
+                    height: 100
+                },
+                value: '7SEG'
+            };
+            
             ReactDOM.render(
-                <React7Seg.Digit width="300" height="600" value="71" />,
-                document.getElementById('example')
+                <SegGroup {...titleConfig} />,
+                document.getElementById('title')
+            );
+            
+            var examples = [
+                BasicEg,
+                TimeEg,
+                DotsEg,
+                OptionsEg,
+                StyleEg,
+                PatternEg,
+                ShapeEg
+            ];
+            
+            var i = 0;
+            ReactDOM.render(
+                <div>
+                    <br/><br/>
+                    {examples.map(function(Example){
+                        return (
+                            
+                            <div key={i++}>
+                                <Example/>
+                                <br/>
+                            </div>
+                        );
+                    })}
+                    
+                    <br/>
+                </div>,
+                document.getElementById("examples")
             );
         </script>
     </body>
