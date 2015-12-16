@@ -7,27 +7,17 @@ import SegDigit from './SegDigit';
 export default React.createClass({
     getDefaultProps: function(){
         return {
-            size: 9,
-            align: true,
-            value: '-.1.2.345'
-        };
-    },
-    getInitialState: function(){
-        return {
-            digits: []
+            value: '',
+            align: undefined,
+            map: SegMap
         };
     },
     isDot : function(item) {
-        return item === '.' || item === SegMap['.'];
+        return item === '.' || item === this.props.map['.'];
     },
-    
-    componentWillReceiveProps: function(nextProps){
-        this.setState({
-            digits: this.getSegDigits(this.getSegArray(nextProps))
-        });
-    },
-    
     getSegArray: function(value) {
+        var map = this.props.map;
+        
         var newArr = [], cnt = 0;
         var size = this.props.size === void 0 ? value.length : this.props.size, i = 0;
         
@@ -37,12 +27,12 @@ export default React.createClass({
             if( this.isDot(item) ){ // when item is dot
                 var prev = value[i-1];
                 
-                if( prev === void 0 || this.isDot(prev) ) newArr[cnt] = SegMap['.'];
-                else newArr[--cnt] |= SegMap['.'];
+                if( prev === void 0 || this.isDot(prev) ) newArr[cnt] = map['.'];
+                else newArr[--cnt] |= map['.'];
             }
             
             else if( typeof(item) === 'string' ) {
-                newArr[cnt] = SegMap[item];
+                newArr[cnt] = map[item];
             }
             
             else if( typeof(item) === 'number' ) {
@@ -50,7 +40,7 @@ export default React.createClass({
             }
         }
         
-        if( this.isDot(value[i]) ) newArr[cnt-1] |= SegMap['.'];
+        if( this.isDot(value[i]) ) newArr[cnt-1] |= map['.'];
         
         size = this.props.size === void 0 ? cnt : this.props.size;
         
@@ -62,16 +52,18 @@ export default React.createClass({
         var digits = [];
         
         for(var i = 0 ; i < arr.length ; i++) {
-            digits[i] = <SegDigit value={arr[i]} key={i} />;
+            digits[i] = <SegDigit key={i} {...this.props.digitOptions} value={arr[i]} />;
         }
         
         return digits;
     },
     
     render: function(){
+        var digits = this.getSegDigits(this.getSegArray(this.props.value));
+        
         return (
             <div className="seven-seg-group">
-                {this.state.digits} 
+                {digits} 
             </div>
         );
     }

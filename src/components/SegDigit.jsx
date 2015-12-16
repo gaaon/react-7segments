@@ -1,5 +1,5 @@
 import React        from 'react';
-import points       from '../collections/SegPoints';
+import SegPoints    from '../collections/SegPoints';
 
 import '../styles/SegDigit.scss';
 
@@ -8,6 +8,7 @@ export default React.createClass({
         return {
             digitClass: 'seven-seg-digit',
             onClass: 'seven-seg-on',
+            points: SegPoints,
             width: 75,
             height: 150
         };
@@ -30,7 +31,7 @@ export default React.createClass({
         var polylines = [];
         
         for(var i = 0 ; i < 7 ; i++) {
-            polylines[i] = <polyline points={points[i]} className={this.isOn(1<<i)} key={i} />;
+            polylines[i] = <polyline points={this.props.points[i]} className={this.isOn(1<<i)} key={i} />;
         }
         
         return (
