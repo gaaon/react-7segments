@@ -4,7 +4,8 @@
   "description": "React component for displaying seven segments",
   "main": "react-7segments.js",
   "scripts": {
-    "test": "karma start"
+    "test": "karma start",
+    "build": "webpack && webpack --config webpack.config.min.js"
   },
   "repository": {
     "type": "git",
@@ -17,7 +18,8 @@
     "react-7segment",
     "framework",
     "front-end",
-    "react-component"
+    "react-component",
+    "segments"
   ],
   "author": "Taewoo Kim <xodn4195@gmail.com>",
   "license": "MIT",
@@ -33,10 +35,12 @@
     "console.table": "^0.4.0",
     "css-loader": "^0.23.0",
     "jest-cli": "^0.8.1",
+    "jquery": "^2.1.4",
     "karma": "^0.13.15",
     "karma-chai-plugins": "^0.6.1",
     "karma-coverage": "^0.5.3",
     "karma-coveralls": "^1.1.2",
+    "karma-jquery": "^0.1.0",
     "karma-mocha": "^0.2.1",
     "karma-phantomjs-launcher": "^0.2.1",
     "karma-sourcemap-loader": "^0.3.6",
@@ -53,7 +57,9 @@
     "webpack": "^1.12.9"
   },
   "dependencies": {
+    "lodash.assign": "^3.2.0",
     "react": "^0.14.3",
+    "react-addons-linked-state-mixin": "^0.14.3",
     "react-dom": "^0.14.3"
   }
 }

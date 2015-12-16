@@ -1,5 +1,6 @@
 {
   "name": "react-7segments",
+  "version": "0.0.1",
   "description": "React component for displaying seven segments",
   "main": "react-7segments.js",
   "authors": [
@@ -13,7 +14,8 @@
     "react-7segment",
     "framework",
     "front-end",
-    "react-component"
+    "react-component",
+    "segments"
   ],
   "homepage": "http://wooooo.github.io/react-7segments",
   "moduleType": [
@@ -28,5 +30,9 @@
   ],
   "dependencies": {
     "react": "~0.14.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Wooooo/angular-7segments.git"
   }
 }
